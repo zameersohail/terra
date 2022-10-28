@@ -1,0 +1,29 @@
+---
+- name: Update web servers
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Ensure apache is at the latest version
+    yum:
+      name: httpd
+      state: present
+
+  - name: start httpd
+    service:
+      name: httpd
+      state: started
+
+  - name: enable httpd
+    service:
+      name: httpd
+      enabled: yes
+  - name: install git      
+    yum:
+      name: git
+      state: present
+
+  - name: deploy app   
+    git:
+      dest: /var/www/html
+      repo: https://github.com/ravi2krishna/ecomm.git
